@@ -24,6 +24,7 @@ jobs:
         distribution: 'adopt'
 
     - name: Build with Maven
+      working-directory: ./reservation-service
       run: mvn clean package -DskipTests
 
   test:
@@ -41,4 +42,5 @@ jobs:
         distribution: 'adopt'
 
     - name: Build with Maven
+      working-directory: ./reservation-service
       run: mvn clean test
