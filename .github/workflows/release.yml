@@ -1,4 +1,4 @@
-name: Build and Test Spring Boot App
+name: Kaniko release
 
 on:
   push:
@@ -32,13 +32,12 @@ jobs:
     - name: Test app
       working-directory: ./reservation-service
       run: mvn test
-    - name: Build Docker Image with Kaniko
-      uses: mattstratton/kaniko-action@v2
+    
+    - name: Kaniko build
+      uses: aevea/action-kaniko@master
       with:
-        context: .  # Path to the directory containing your Dockerfile
-        dockerfile: Dockerfile  # Path to your Dockerfile
-        destination: ftndevops2024/reservation-service-example:$GITHUB_SHA  # Destination of the built image
-        registry: docker.io  # Docker registry URL
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}  # Docker registry username
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  # Docker registry password
+        image: ftndevops2024/reservation-service-example
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        cache: true
+        cache_registry: aevea/cache
