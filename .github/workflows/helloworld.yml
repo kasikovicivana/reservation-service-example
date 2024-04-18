@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build and test
     runs-on: ubuntu-latest
 
     steps:
@@ -27,6 +27,6 @@ jobs:
       working-directory: ./reservation-service
       run: mvn clean package -DskipTests
 
-    - name: Build with Maven
+    - name: Test app
       working-directory: ./reservation-service
       run: mvn test
