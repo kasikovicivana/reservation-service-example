@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  reservation-db:
+    image: postgres:latest
+    container_name: reservation-db
+    environment:
+      POSTGRES_DB: reservation
+      POSTGRES_USER: my_user
+      POSTGRES_PASSWORD: my_password
+    ports:
+      - "5000:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  reservation-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reservation-service
+    ports:
+      - "9000:9000"
+    depends_on:
+      - reservation-db
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@test.com
+      PGADMIN_DEFAULT_PASSWORD: test123
+    ports:
+      - "5050:80"
+
+volumes:
+  postgres_data:
