@@ -15,6 +15,9 @@ jobs:
     name: Build and test
     runs-on: ubuntu-latest
 
+    env:
+      INTEGRATION_TEST_DIR: 'reservationservice/integration'
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -29,6 +32,14 @@ jobs:
       working-directory: ./reservation-service
       run: mvn clean package -DskipTests
 
-    - name: Test app
+    - name: Run Unit Tests
       working-directory: ./reservation-service
-      run: mvn test
+      run: mvn test -Dtest=!com.devops.reservationservice.integration.*
+
+    - name: Run Integration Tests
+      working-directory: ./reservation-service
+      run: |
+        docker compose -f docker-compose.integration.yml up -d --wait
+        mvn test -Dtest=com.devops.reservationservice.integration.*
+        docker compose down
+

@@ -1,4 +1,4 @@
-package com.devops.reservationservice;
+package com.devops.reservationservice.unit;
 
 import com.devops.reservationservice.service.TestService;
 import org.junit.jupiter.api.Test;
