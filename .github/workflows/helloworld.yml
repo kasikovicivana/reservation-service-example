@@ -32,14 +32,6 @@ jobs:
       working-directory: ./reservation-service
       run: mvn clean package -DskipTests
 
-    - name: Run Unit Tests
+    - name: Run  Tests
       working-directory: ./reservation-service
-      run: mvn test -Dtest=!com.devops.reservationservice.integration.*
-
-    - name: Run Integration Tests
-      working-directory: ./reservation-service
-      run: |
-        docker compose -f docker-compose.integration.yml up -d --wait
-        mvn test -Dtest=com.devops.reservationservice.integration.*
-        docker compose down
-
+      run: mvn test
