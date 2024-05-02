@@ -1,6 +1,5 @@
 package com.devops.reservationservice.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +23,7 @@ public class TestControllerIntegrationTest {
 
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16.0").withDatabaseName("test").withUsername("postgres").withPassword("postgres");
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16.0").withDatabaseName("test").withUsername("postgres").withPassword("postgres").withNetworkAliases("devops");
 
     @Test
     public void testGetTestEndpoint() {
