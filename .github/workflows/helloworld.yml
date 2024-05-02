@@ -34,4 +34,7 @@ jobs:
 
     - name: Run  Tests
       working-directory: ./reservation-service
-      run: mvn test
+      run: |
+        docker compose up
+        mvn test
+        docker compose down
