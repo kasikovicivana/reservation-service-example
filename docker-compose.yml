@@ -20,6 +20,9 @@ services:
     container_name: reservation-service
     ports:
       - "9000:9000"
+    environment:
+      REGISTRY_SERVER: service-registry
+      DB_SERVER: reservation-db
     depends_on:
       - reservation-db
   pgadmin:
