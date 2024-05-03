@@ -30,7 +30,7 @@ public class TestControllerIntegrationTest {
 
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16.0").withNetworkAliases("devops");
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16.0").withNetworkAliases("reservation-db");
 
     @Test
     public void testGetTestEndpoint() {
