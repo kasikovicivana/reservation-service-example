@@ -1,5 +1,7 @@
 package com.devops.reservationservice.controller;
 
+import com.devops.reservationservice.model.Admin;
+import com.devops.reservationservice.repository.TestRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +13,8 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
@@ -20,6 +24,9 @@ public class TestControllerIntegrationTest {
 
     @Autowired
     TestRestTemplate restTemplate;
+
+    @Autowired
+    TestRepository testRepository;
 
     @Container
     @ServiceConnection
@@ -33,5 +40,7 @@ public class TestControllerIntegrationTest {
         System.out.println(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(response.getBody(), "Welcome from reservation-service");
+        List<Admin> admins = this.testRepository.findAll();
+        System.out.println(admins);
     }
 }
