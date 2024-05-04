@@ -21,5 +21,9 @@ public class TestService {
         System.out.println();
         return "Welcome from reservation-service";
     }
+
+    public String testService(){
+        return "Welcome from reservation-service";
+    }
 }
 
