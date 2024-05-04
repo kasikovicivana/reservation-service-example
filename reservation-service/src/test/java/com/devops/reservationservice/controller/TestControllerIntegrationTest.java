@@ -55,15 +55,15 @@ public class TestControllerIntegrationTest {
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
     }
-//    @Test
-//    public void testGetTestEndpoint() {
-//        given()
-//                .contentType(ContentType.JSON)
-//                .when()
-//                .get("/test")
-//                .then()
-//                .statusCode(200);
-//        List<Admin> admins = this.testRepository.findAll();
-//        System.out.println(admins);
-//    }
+    @Test
+    public void testGetTestEndpoint() {
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/test")
+                .then()
+                .statusCode(200);
+        List<Admin> admins = this.testRepository.findAll();
+        System.out.println(admins);
+    }
 }
