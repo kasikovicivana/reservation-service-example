@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestService {
 
-    @Autowired
-    TestRepository testRepository;
+//    @Autowired
+//    TestRepository testRepository;
 
     public String test(){
-        System.out.println("uslo u testt");
-        try {
-            testRepository.save(new Admin(1L, "pera"));
-        }catch (Error message){
-            System.out.println(message);
-        }
+//        System.out.println("uslo u testt");
+//        try {
+//            testRepository.save(new Admin(1L, "pera"));
+//        }catch (Error message){
+//            System.out.println(message);
+//        }
         System.out.println();
         return "Welcome from reservation-service";
     }
