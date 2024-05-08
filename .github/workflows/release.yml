@@ -32,6 +32,7 @@ jobs:
         run: |
           VERSION=$(./scripts/determine_version.sh "$(git log --pretty=%B -n 1)")
           echo "::set-output name=VERSION::$VERSION"
+
   build:
     name: Build, test and release to Docker Hub
     runs-on: ubuntu-latest
@@ -57,13 +58,15 @@ jobs:
         run: mvn test
 
       - name: Echo version
-        run:
-          echo "'${{ needs.determine-version.outputs.VERSION }}'"
+        run: echo "'${{ needs.determine-version.outputs.VERSION }}'"
+
+      - name: Set version for subsequent steps
+        run: echo "::set-env name=DOCKER_IMAGE_VERSION::${{ needs.determine-version.outputs.VERSION }}"
 
       - name: Kaniko build
         uses: aevea/action-kaniko@master
         with:
-          image: ftndevops2024/reservation-service-example:${{ needs.determine-version.outputs.VERSION }}
+          image: ftndevops2024/reservation-service-example:${{ env.DOCKER_IMAGE_VERSION }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           cache: true
