@@ -9,7 +9,6 @@ determine_version() {
         return
     fi
 
-    # Get the previous version passed as an argument
     PREVIOUS_VERSION=$1
 
     # Get the type of changes since the last release
