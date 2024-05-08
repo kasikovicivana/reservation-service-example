@@ -43,4 +43,4 @@ determine_version() {
 
 # Determine the version
 VERSION=$(determine_version)
-echo "New version: ${VERSION}"
+echo "${VERSION}"

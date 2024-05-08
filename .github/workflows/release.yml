@@ -14,7 +14,8 @@ jobs:
   determine-version:
     name: Determine Semantic Version
     runs-on: ubuntu-latest
-
+    outputs:
+      version: ${{ steps.version.outputs.VERSION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
