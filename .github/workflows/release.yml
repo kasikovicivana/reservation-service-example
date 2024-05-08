@@ -46,7 +46,7 @@ jobs:
 
           echo "${VERSION}" > version.txt
           echo "::set-output name=version::$VERSION"
-          echo "Determineda version: $VERSION"
+          echo "Determined version: $VERSION"
 
       - name: Upload version.txt as an artifact
         uses: actions/upload-artifact@v4
