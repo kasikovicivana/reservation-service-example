@@ -16,8 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.VERSION }}
-    env:
-      PREVIOUS_VERSION: ${{ github.event.inputs.previous_version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -36,10 +34,9 @@ jobs:
           echo "get version: ${{ github.event.inputs.previous_version }}"
           VERSION=$(./scripts/determine_version.sh "${{ github.event.inputs.previous_version }}")
           echo "::set-output name=version::$VERSION"
-          echo "PREVIOUS_VERSION=$VERSION" >> $GITHUB_ENV
           echo "Determined version: $VERSION"
-          echo "new version: ${{ github.event.inputs.previous_version }}"
-          echo "new version var: $PREVIOUS_VERSION"
+        env:
+          PREVIOUS_VERSION: ${{ steps.version.outputs.version }}
 
   build:
     name: Build, test and release to Docker Hub
