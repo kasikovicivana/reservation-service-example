@@ -32,7 +32,7 @@ jobs:
         id: version
         run: |
           PREVIOUS_VERSION=$VERSION
-          echo "Prev version: $PREVIOUS_VERSION"
+          echo "Previous version: $PREVIOUS_VERSION"
 
           UPDATED_VERSION=$(./scripts/determine_version.sh "${PREVIOUS_VERSION}")
 
