@@ -33,11 +33,11 @@ jobs:
       - name: Determine version
         id: version
         run: |
-          VERSION=$(./scripts/determine_version.sh "$PREVIOUS_VERSION")
+          VERSION=$(./scripts/determine_version.sh "${{ github.event.inputs.previous_version }}")
           echo "::set-output name=version::$VERSION"
           echo "PREVIOUS_VERSION=$VERSION" >> $GITHUB_ENV
           echo "Determined version: $VERSION"
-          echo "Read PREVIOUS_VERSION from environment: ${{ env.PREVIOUS_VERSION }}"
+          echo "Read PREVIOUS_VERSION from environment: ${{ github.event.inputs.previous_version }}"
 
   build:
     name: Build, test and release to Docker Hub
