@@ -50,7 +50,7 @@ jobs:
           VERSION=$(./scripts/determine_version.sh "${PREVIOUS_VERSION}")
           echo "${VERSION}" > version.txt
           CONTENT=$(cat version.txt)
-          echo "Previousa version: $CONTENT"
+          echo "Previousaa version: $CONTENT"
           echo "::set-output name=version::$VERSION"
           echo "Determined version: $VERSION"
 
