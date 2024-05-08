@@ -33,7 +33,7 @@ determine_version() {
         return
     fi
 
-    # Output the new version
+    # Output the new version created
     echo "${MAJOR}.${MINOR}.${PATCH}"
 }
 
