@@ -32,6 +32,7 @@ jobs:
         run: |
           VERSION=$(./scripts/determine_version.sh "$(git log --pretty=%B -n 1)")
           echo "::set-output name=VERSION::$VERSION"
+          echo "Determined version: $VERSION" # Add this line for debug
 
   build:
     name: Build, test and release to Docker Hub
