@@ -6,7 +6,7 @@ determine_version() {
     if [[ -z "$(git tag)" ]]; then
         # No tags found, set a default version or handle the situation accordingly
         # echo "No tags found. Setting default version."
-        echo "1.0.0"
+        echo 0.1.0
         return
     fi
 
