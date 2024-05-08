@@ -36,6 +36,7 @@ jobs:
         id: version
         run: |
           PREVIOUS_VERSION=$(cat version.txt || echo "0.0.0")
+          echo "Prev version: $PREVIOUS_VERSION"
           VERSION=$(./scripts/determine_version.sh "${PREVIOUS_VERSION}")
           echo "${VERSION}" > version.txt
           echo "::set-output name=version::$VERSION"
