@@ -32,9 +32,6 @@ jobs:
         uses: actions/cache@v2
         with:
           path: version.txt
-          key: version-${{ github.run_number }}
-          restore-keys: |
-            version-
 
       - name: Determine version
         id: version
