@@ -33,7 +33,7 @@ jobs:
           VERSION=$(./scripts/determine_version.sh "$(git log --pretty=%B -n 1)")
           echo "::set-output name=VERSION::$VERSION"
   build:
-    name: Build and test
+    name: Build, test and release to Docker Hub
     runs-on: ubuntu-latest
 
     needs: determine-version
@@ -55,6 +55,10 @@ jobs:
     - name: Test app
       working-directory: ./reservation-service
       run: mvn test
+
+    - name: Echo version
+      run:
+        echo "Using version: ${{ needs.determine-version.outputs.VERSION }}"
     
     - name: Kaniko build
       uses: aevea/action-kaniko@master
