@@ -28,12 +28,14 @@ jobs:
       - name: Set execute permission on script
         run: chmod +x ./scripts/determine_version.sh
 
+      - name: Create version file if it doesn't exist
+        run: |
+          touch version.txt
+
       - name: Determine version
         id: version
         run: |
-          echo "get version: ${{ github.event.inputs.previous_version }}"
-          PREVIOUS_VERSION=$(cat version.txt)
-          echo "prev version: $PREVIOUS_VERSION"
+          PREVIOUS_VERSION=$(cat version.txt || echo "0.0.0")  # Default to 0.0.0 if version.txt doesn't exist
           VERSION=$(./scripts/determine_version.sh "${PREVIOUS_VERSION}")
           echo "${VERSION}" > version.txt
           echo "::set-output name=version::$VERSION"
