@@ -28,7 +28,7 @@ determine_version() {
     elif [[ -n "${FIX_COMMITS}" ]]; then
         ((PATCH++))
     else
-        echo "No significant changes found since the last release. Keeping the same version: $1"
+        # echo "No significant changes found since the last release. Keeping the same version: $1"
         echo "$1"
         return
     fi
@@ -37,9 +37,9 @@ determine_version() {
     echo "${MAJOR}.${MINOR}.${PATCH}"
 }
 
-echo "Previous version provided: $1"
+# echo "Previous version provided: $1"
 
 # Determine the version using the previous version passed as an argument
 VERSION=$(determine_version "$1")
-echo "After determining version"
+# echo "After determining version"
 echo "${VERSION}"
