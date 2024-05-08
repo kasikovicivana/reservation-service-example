@@ -1,5 +1,7 @@
 #!/bin/bash
 
+chmod +x "$BASH_SOURCE"
+
 # Function to determine the version based on changes
 determine_version() {
     # Logic to analyze changes and determine the version
