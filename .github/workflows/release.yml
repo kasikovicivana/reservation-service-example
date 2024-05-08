@@ -62,13 +62,10 @@ jobs:
       - name: Echo version
         run: echo "${{ needs.determine-version.outputs.version }}"
 
-      - name: Set version for subsequent steps
-        run: echo "::set-env name=DOCKER_IMAGE_VERSION::${{ needs.determine-version.outputs.version }}"
-
       - name: Kaniko build
         uses: aevea/action-kaniko@master
         with:
-          image: ftndevops2024/reservation-service-example:${{ env.DOCKER_IMAGE_VERSION }}
+          image: ftndevops2024/reservation-service-example:${{ needs.determine-version.outputs.version }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           cache: true
