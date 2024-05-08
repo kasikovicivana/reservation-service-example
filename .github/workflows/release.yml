@@ -39,13 +39,7 @@ jobs:
       - name: Determine version
         id: version
         run: |
-          if [ -f version.txt ]; then
-            PREVIOUS_VERSION=$(cat version.txt)
-            echo "Previous version: $PREVIOUS_VERSION"
-          else
-            echo "version.txt not found. Setting default version..."
-            PREVIOUS_VERSION="1.0.0"
-          fi
+          PREVIOUS_VERSION=$(cat version.txt || echo "1.0.0")
           echo "Prev version: $PREVIOUS_VERSION"
 
           VERSION=$(./scripts/determine_version.sh "${PREVIOUS_VERSION}")
