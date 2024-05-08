@@ -65,7 +65,7 @@ jobs:
       - name: Kaniko build
         uses: aevea/action-kaniko@master
         with:
-          image: ftndevops2024/reservation-service-example:${{ needs.determine-version.outputs.version }}
+          image: ftndevops2024/reservation-service-example
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           cache: true
