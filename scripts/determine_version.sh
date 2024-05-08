@@ -9,33 +9,27 @@ determine_version() {
         return
     fi
 
-    PREVIOUS_VERSION=$1
+    # Extract major and minor components from the previous version
+    IFS='.' read -r MAJOR MINOR PATCH <<< "$1"
 
     # Get the type of changes since the last release
-    BREAKING_COMMITS=$(git log ${PREVIOUS_VERSION}..HEAD --grep="\[BREAKING CHANGE\]")
-    FEATURE_COMMITS=$(git log ${PREVIOUS_VERSION}..HEAD --grep="feat:")
-    FIX_COMMITS=$(git log ${PREVIOUS_VERSION}..HEAD --grep="fix:")
+    BREAKING_COMMITS=$(git log "$1"..HEAD --grep="\[BREAKING CHANGE\]")
+    FEATURE_COMMITS=$(git log "$1"..HEAD --grep="feat:")
+    FIX_COMMITS=$(git log "$1"..HEAD --grep="fix:")
 
-#    # Increment the version components based on commit messages
-#    if [[ -z "$(git tag)" ]]; then
-#        # No tags found, set a default version
-#        echo "0.1.0"
-#        return
+    # Increment the version components based on commit messages
     if [[ -n "${BREAKING_COMMITS}" ]]; then
-        IFS='.' read -r MAJOR MINOR PATCH <<< "${PREVIOUS_VERSION}"
         ((MAJOR++))
         MINOR=0
         PATCH=0
     elif [[ -n "${FEATURE_COMMITS}" ]]; then
-        IFS='.' read -r MAJOR MINOR PATCH <<< "${PREVIOUS_VERSION}"
         ((MINOR++))
         PATCH=0
     elif [[ -n "${FIX_COMMITS}" ]]; then
-        IFS='.' read -r MAJOR MINOR PATCH <<< "${PREVIOUS_VERSION}"
         ((PATCH++))
     else
-        echo "No significant changes found since the last release. Keeping the same version: ${PREVIOUS_VERSION}"
-        echo "${PREVIOUS_VERSION}"
+        echo "No significant changes found since the last release. Keeping the same version: $1"
+        echo "$1"
         return
     fi
 
@@ -47,4 +41,5 @@ echo "Previous version provided: $1"
 
 # Determine the version using the previous version passed as an argument
 VERSION=$(determine_version "$1")
+echo "After determining version"
 echo "${VERSION}"
