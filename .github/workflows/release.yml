@@ -16,43 +16,21 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.VERSION }}
-      artifact_id: ${{ github.run_id }}-version
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Git
-        run: |
-          git config --global user.email "ikasikovic@yahoo.com"
-          git config --global user.name "kasikovicivana"
-
-      - name: Set execute permission on script
-        run: chmod +x ./scripts/determine_version.sh
-
-      - name: Download version.txt artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: version
-          path: version.txt
-        continue-on-error: true
-
       - name: Determine version
         id: version
         run: |
-          PREVIOUS_VERSION=$(cat version.txt || echo "1.0.0")
+          PREVIOUS_VERSION=$VERSION
           echo "Prev version: $PREVIOUS_VERSION"
 
-          VERSION=$(./scripts/determine_version.sh "${PREVIOUS_VERSION}")
+          UPDATED_VERSION=$(./scripts/determine_version.sh "${PREVIOUS_VERSION}")
 
-          echo "${VERSION}" > version.txt
-          echo "::set-output name=version::$VERSION"
-          echo "Determined version: $VERSION"
-
-      - name: Upload version.txt as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: version
-          path: version.txt
+          echo "Determined version: $UPDATED_VERSION"
+          echo "::set-output name=version::$UPDATED_VERSION"
+          echo "VERSION=$UPDATED_VERSION" >> $GITHUB_ENV
 
   build:
     name: Build, test and release to Docker Hub
@@ -61,12 +39,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
-      - name: Download version.txt artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: version
-          path: ./version.txt
 
       - name: Set up JDK 17
         uses: actions/setup-java@v2
