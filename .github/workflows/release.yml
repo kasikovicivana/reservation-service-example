@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.VERSION }}
+    env:
+      VERSION: ${{ secrets.VERSION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
