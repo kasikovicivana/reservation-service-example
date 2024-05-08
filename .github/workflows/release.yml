@@ -39,6 +39,7 @@ jobs:
           echo "PREVIOUS_VERSION=$VERSION" >> $GITHUB_ENV
           echo "Determined version: $VERSION"
           echo "new version: ${{ github.event.inputs.previous_version }}"
+          echo "new version var: $PREVIOUS_VERSION"
 
   build:
     name: Build, test and release to Docker Hub
