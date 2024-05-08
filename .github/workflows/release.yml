@@ -48,7 +48,6 @@ jobs:
           fi
           echo "Prev version: $PREVIOUS_VERSION"
 
-          # Pass the stored version as an argument to determine_version.sh
           VERSION=$(./scripts/determine_version.sh "${PREVIOUS_VERSION}")
 
           echo "${VERSION}" > version.txt
