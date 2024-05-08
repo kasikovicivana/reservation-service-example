@@ -2,23 +2,26 @@
 
 # Function to determine the version based on commit messages
 determine_version() {
-    # Check if there are any tags available
-    if [[ -z "$(git tag)" ]]; then
-        # No tags found, set a default version or handle the situation accordingly
-        # echo "No tags found. Setting default version."
+    # Check if a previous version was provided
+    if [[ -z "$1" ]]; then
+        # No previous version provided, set a default version
         echo "0.1.0"
         return
     fi
 
-    # Get the latest tag to determine the previous version
-    PREVIOUS_VERSION=$(git describe --tags --abbrev=0)
+    # Get the previous version passed as an argument
+    PREVIOUS_VERSION=$1
 
     # Get the type of changes since the last release
     BREAKING_COMMITS=$(git log ${PREVIOUS_VERSION}..HEAD --grep="\[BREAKING CHANGE\]")
     FEATURE_COMMITS=$(git log ${PREVIOUS_VERSION}..HEAD --grep="feat:")
     FIX_COMMITS=$(git log ${PREVIOUS_VERSION}..HEAD --grep="fix:")
 
-    # Increment the version components based on commit messages
+#    # Increment the version components based on commit messages
+#    if [[ -z "$(git tag)" ]]; then
+#        # No tags found, set a default version
+#        echo "0.1.0"
+#        return
     if [[ -n "${BREAKING_COMMITS}" ]]; then
         IFS='.' read -r MAJOR MINOR PATCH <<< "${PREVIOUS_VERSION}"
         ((MAJOR++))
@@ -41,6 +44,6 @@ determine_version() {
     echo "${MAJOR}.${MINOR}.${PATCH}"
 }
 
-# Determine the version
-VERSION=$(determine_version)
+# Determine the version using the previous version passed as an argument
+VERSION=$(determine_version "$1")
 echo "${VERSION}"

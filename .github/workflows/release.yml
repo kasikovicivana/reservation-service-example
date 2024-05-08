@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.VERSION }}
+    env:
+      PREVIOUS_VERSION: ${{ github.event.inputs.previous_version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -31,8 +33,9 @@ jobs:
       - name: Determine version
         id: version
         run: |
-          VERSION=$(./scripts/determine_version.sh "$(git log --pretty=%B -n 1)")
+          VERSION=$(./scripts/determine_version.sh "$PREVIOUS_VERSION")
           echo "::set-output name=version::$VERSION"
+          echo "PREVIOUS_VERSION=$VERSION" >> $GITHUB_ENV
           echo "Determined version: $VERSION"
 
   build:
