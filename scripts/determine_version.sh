@@ -29,7 +29,7 @@ determine_version() {
         ((PATCH++))
     else
         # echo "No significant changes found since the last release. Keeping the same version: $1"
-        echo "$1"
+        echo "2.0.0"
         return
     fi
 
