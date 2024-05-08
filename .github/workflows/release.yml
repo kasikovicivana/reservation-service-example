@@ -27,7 +27,7 @@ jobs:
       - name: Determine version
         id: version
         run: |
-          VERSION=$(../../scripts/determine_version.sh "$(git log --pretty=%B -n 1)")
+          VERSION=$(./scripts/determine_version.sh "$(git log --pretty=%B -n 1)")
           echo "::set-output name=VERSION::$VERSION"
   build:
     name: Build and test
