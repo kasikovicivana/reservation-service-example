@@ -1,10 +1,14 @@
 #!/bin/bash
 
-# Function to determine the version based on changes
+# Function to determine the version based on commit messages
 determine_version() {
-    # Logic to analyze changes and determine the version
-    # For simplicity, let's assume every commit with "[BREAKING CHANGE]" in the message increments the MAJOR version,
-    # commits with "feat:" increment the MINOR version, and commits with "fix:" increment the PATCH version.
+    # Check if there are any tags available
+    if [[ -z "$(git tag)" ]]; then
+        # No tags found, set a default version or handle the situation accordingly
+        echo "No tags found. Setting default version."
+        echo "1.0.0"
+        return
+    fi
 
     # Get the latest tag to determine the previous version
     PREVIOUS_VERSION=$(git describe --tags --abbrev=0)
@@ -14,7 +18,7 @@ determine_version() {
     FEATURE_COMMITS=$(git log ${PREVIOUS_VERSION}..HEAD --grep="feat:")
     FIX_COMMITS=$(git log ${PREVIOUS_VERSION}..HEAD --grep="fix:")
 
-    # Increment the version components
+    # Increment the version components based on commit messages
     if [[ -n "${BREAKING_COMMITS}" ]]; then
         IFS='.' read -r MAJOR MINOR PATCH <<< "${PREVIOUS_VERSION}"
         ((MAJOR++))
@@ -28,8 +32,9 @@ determine_version() {
         IFS='.' read -r MAJOR MINOR PATCH <<< "${PREVIOUS_VERSION}"
         ((PATCH++))
     else
-        echo "No significant changes found. Keeping the same version: ${PREVIOUS_VERSION}"
-        exit 0
+        echo "No significant changes found since the last release. Keeping the same version: ${PREVIOUS_VERSION}"
+        echo "${PREVIOUS_VERSION}"
+        return
     fi
 
     # Output the new version
