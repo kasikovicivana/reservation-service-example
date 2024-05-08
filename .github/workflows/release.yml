@@ -31,8 +31,8 @@ jobs:
         id: version
         run: |
           VERSION=$(./scripts/determine_version.sh "$(git log --pretty=%B -n 1)")
-          echo "::set-output name=VERSION::$VERSION"
-          echo "Determined version: $VERSION" # Add this line for debug
+          echo "::set-output name=version::$VERSION"
+          echo "Determined version: $VERSION"
 
   build:
     name: Build, test and release to Docker Hub
@@ -59,10 +59,10 @@ jobs:
         run: mvn test
 
       - name: Echo version
-        run: echo "'${{ needs.determine-version.outputs.VERSION }}'"
+        run: echo "${{ needs.determine-version.outputs.version }}"
 
       - name: Set version for subsequent steps
-        run: echo "::set-env name=DOCKER_IMAGE_VERSION::${{ needs.determine-version.outputs.VERSION }}"
+        run: echo "::set-env name=DOCKER_IMAGE_VERSION::${{ needs.determine-version.outputs.version }}"
 
       - name: Kaniko build
         uses: aevea/action-kaniko@master
