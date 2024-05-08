@@ -59,9 +59,6 @@ jobs:
         working-directory: ./reservation-service
         run: mvn test
 
-      - name: Echo version
-        run: echo "${{ needs.determine-version.outputs.version }}"
-
       - name: Kaniko build
         uses: aevea/action-kaniko@master
         with:
