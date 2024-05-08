@@ -32,11 +32,12 @@ jobs:
         id: version
         run: |
           echo "get version: ${{ github.event.inputs.previous_version }}"
-          VERSION=$(./scripts/determine_version.sh "${{ github.event.inputs.previous_version }}")
+          PREVIOUS_VERSION=$(cat version.txt)
+          echo "prev version: $PREVIOUS_VERSION"
+          VERSION=$(./scripts/determine_version.sh "${PREVIOUS_VERSION}")
+          echo "${VERSION}" > version.txt
           echo "::set-output name=version::$VERSION"
           echo "Determined version: $VERSION"
-        env:
-          PREVIOUS_VERSION: ${{ steps.version.outputs.version }}
 
   build:
     name: Build, test and release to Docker Hub
@@ -71,4 +72,3 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           cache: true
           cache_registry: aevea/cache
-# ende
