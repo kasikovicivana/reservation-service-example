@@ -34,6 +34,7 @@ jobs:
         with:
           name: version
           path: version.txt
+        continue-on-error: true
 
       - name: Determine version
         id: version
