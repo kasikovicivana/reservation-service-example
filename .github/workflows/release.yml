@@ -37,6 +37,7 @@ jobs:
           echo "::set-output name=version::$VERSION"
           echo "PREVIOUS_VERSION=$VERSION" >> $GITHUB_ENV
           echo "Determined version: $VERSION"
+          echo "Read PREVIOUS_VERSION from environment: ${{ env.PREVIOUS_VERSION }}"
 
   build:
     name: Build, test and release to Docker Hub

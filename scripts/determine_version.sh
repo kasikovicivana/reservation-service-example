@@ -43,6 +43,8 @@ determine_version() {
     echo "${MAJOR}.${MINOR}.${PATCH}"
 }
 
+echo "Previous version provided: $1"
+
 # Determine the version using the previous version passed as an argument
 VERSION=$(determine_version "$1")
 echo "${VERSION}"
