@@ -11,35 +11,9 @@ on:
       - develop
 
 jobs:
-  determine-version:
-    name: Determine Semantic Version
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.version.outputs.VERSION }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Git
-        run: |
-          git config --global user.email "ikasikovic@yahoo.com"
-          git config --global user.name "kasikovicivana"
-
-      - name: Determine version
-        id: version
-        run: |
-          PREVIOUS_VERSION=$VERSION
-          echo "Previous version: $PREVIOUS_VERSION"
-
-          UPDATED_VERSION=$(./scripts/determine_version.sh "${PREVIOUS_VERSION}")
-
-          echo "Determined version: $UPDATED_VERSION"
-          echo "::set-output name=version::$UPDATED_VERSION"
-
   build:
     name: Build, test and release to Docker Hub
     runs-on: ubuntu-latest
-    needs: determine-version
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
