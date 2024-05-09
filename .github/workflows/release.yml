@@ -36,7 +36,7 @@ jobs:
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           owner: kasikovicivana
-          repo: reservation-service-example
+          repository: ${{ github.repository }}
           excludes: prerelease, draft
       - name: Kaniko build
         uses: aevea/action-kaniko@master
