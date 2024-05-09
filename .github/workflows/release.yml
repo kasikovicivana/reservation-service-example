@@ -1,15 +1,12 @@
 name: Kaniko release
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-  pull_request:
-    branches:
-      - main
-      - develop
-
+  workflow_dispatch:
+    inputs:
+      releaseTag:
+        description: 'Release tag'
+        required: true
+        default: '0.1.0'
 jobs:
   build:
     name: Build, test and release to Docker Hub
@@ -31,18 +28,11 @@ jobs:
       - name: Test app
         working-directory: ./reservation-service
         run: mvn test
-
-      - id: reservation-service-example
-        uses: pozetroninc/github-action-get-latest-release@master
-        with:
-          owner: kasikovicivana
-          repository: ${{ github.repository }}
-          excludes: prerelease, draft
       - name: Kaniko build
         uses: aevea/action-kaniko@master
         with:
           image: ftndevops2024/reservation-service-example
-          tags: latest, ${{ steps.reservation-service-example.outputs.release }}
+          tag: ${{ github.event.inputs.releaseTag }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           cache: true
