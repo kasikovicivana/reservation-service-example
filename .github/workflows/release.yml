@@ -29,13 +29,11 @@ jobs:
         working-directory: ./reservation-service
         run: mvn test
       - name: Generate Release Notes
-        id: release_notes
-        uses: gableroux/generate-github-release-notes@v0.1.1
+        id: notes
+        uses: RedCrafter07/release-notes-action@v1
         with:
-          repository: ${{ github.repository }}
-          base_tag: ${{ github.event.inputs.releaseTag }}
-          head_tag: ${{ github.sha }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag-name: ${{ github.event.inputs.releaseTag }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Kaniko build
         uses: aevea/action-kaniko@master
         with:
