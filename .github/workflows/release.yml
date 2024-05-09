@@ -35,7 +35,7 @@ jobs:
       - id: reservation-service-example
         uses: pozetroninc/github-action-get-latest-release@master
         with:
-          owner: jankovicivana
+          owner: kasikovicivana
           repo: reservation-service-example
           excludes: prerelease, draft
       - name: Kaniko build
