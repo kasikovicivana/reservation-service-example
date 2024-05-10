@@ -28,12 +28,6 @@ jobs:
       - name: Test app
         working-directory: ./reservation-service
         run: mvn test
-      - name: Generate Release Notes
-        id: notes
-        uses: RedCrafter07/release-notes-action@v1
-        with:
-          tag-name: ${{ github.event.inputs.releaseTag }}
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Kaniko build
         uses: aevea/action-kaniko@master
         with:

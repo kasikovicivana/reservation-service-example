@@ -1,0 +1,14 @@
+# Use a base image with Maven and JDK pre-installed
+FROM maven:3.8.4-openjdk-17-slim AS build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the Maven project definition file
+COPY reservation-service/pom.xml .
+
+# Copy the source code
+COPY reservation-service/src ./src
+
+# Build the application
+RUN mvn dependency:copy-dependencies
