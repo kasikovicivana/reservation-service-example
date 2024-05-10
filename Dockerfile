@@ -1,5 +1,5 @@
 # Use a base image with Maven and JDK pre-installed
-FROM ftndevops2024/caching:0.1.0 AS build
+FROM maven:3.8.4-openjdk-17-slim AS build
 
 # Set the working directory in the container
 WORKDIR /app
