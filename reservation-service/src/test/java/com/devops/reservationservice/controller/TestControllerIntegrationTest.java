@@ -65,5 +65,6 @@ public class TestControllerIntegrationTest {
                 .statusCode(200);
         List<Admin> admins = this.testRepository.findAll();
         System.out.println(admins);
+        System.out.println("test");
     }
 }
