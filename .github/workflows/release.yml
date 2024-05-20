@@ -2,7 +2,7 @@ name: Kaniko release
 
 on:
   push:
-    tags: [ 'v*.*.*' ]
+    tags: [ '*.*.*' ]
 jobs:
   build:
     name: Build, test and release to Docker Hub
