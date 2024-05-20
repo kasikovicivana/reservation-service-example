@@ -1,12 +1,8 @@
 name: Kaniko release
 
 on:
-  workflow_dispatch:
-    inputs:
-      releaseTag:
-        description: 'Release tag'
-        required: true
-        default: '0.1.0'
+  push:
+    tags: [ 'v*.*.*' ]
 jobs:
   build:
     name: Build, test and release to Docker Hub
@@ -25,9 +21,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-release-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-maven-release-
+            ${{ runner.os }}-maven-
 
       - name: Build with Maven
         working-directory: ./reservation-service
@@ -40,7 +36,7 @@ jobs:
         uses: aevea/action-kaniko@master
         with:
           image: ftndevops2024/reservation-service-example
-          tag: ${{ github.event.inputs.releaseTag }}
+          tag: ${{ github.ref_name }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           cache: true

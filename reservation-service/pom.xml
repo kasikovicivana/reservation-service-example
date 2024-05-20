@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.devops</groupId>
-	<artifactId>reservation-service</artifactId>
+	<artifactId>reservation-service-example</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>reservation-service</name>
 	<description>Reservation service</description>
